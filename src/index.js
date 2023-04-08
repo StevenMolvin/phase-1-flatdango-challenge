@@ -51,8 +51,8 @@ function buyTicketHandler(film) {
       buyTicket.addEventListener("click", () => {
         soldTickets = soldTickets + 1;
         remTickets.innerHTML = film.capacity - soldTickets;
-        if (remTickets.innerHTML <= 0) {
-          setTimeout(() => alert("SOLD OUT!!"), 100);
+        if (remTickets.innerHTML < 0) {
+          setTimeout(() => alert("TICKETS SOLD OUT!!"), 100);
           remTickets.innerHTML = 0;
         }
       })

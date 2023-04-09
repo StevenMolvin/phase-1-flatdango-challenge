@@ -13,10 +13,6 @@ function addFilm(film) {
   poster.src = film.poster;
   poster.alt = film.title;
 
-  const title = document.createElement("li");
-  title.innerText = film.title;
-  titles.appendChild(title);
-
   movieTitle.innerHTML = film.title;
 
   descr.innerHTML = film.description;
@@ -34,30 +30,43 @@ fetch("http://localhost:3000/films/1")
 
 //Add Movie titles
 function movieTitles(films) {
-    films.forEach(film => {
-      const title = document.createElement("li");
-      title.innerText = film.title;
-      titles.appendChild(title);
+  films.forEach((film) => {
+    const title = document.createElement("li");
+    title.innerText = film.title;
+    title.setAttribute("id", `${film.id}`);
+    titles.appendChild(title);
+
+    title.addEventListener("click", () => {
+      poster.src = film.poster;
+      poster.alt = film.title;
+
+      movieTitle.innerHTML = film.title;
+
+      descr.innerHTML = film.description;
+
+      runtime.innerHTML = film.runtime;
+
+      showtime.innerHTML = film.showtime;
+
+      remTickets.innerHTML = film.capacity - film.tickets_sold;
     });
-  }
+  });
+}
 fetch("http://localhost:3000/films")
   .then((response) => response.json())
   .then(movieTitles);
 
 //Buy movie tickets
-function buyTicketHandler(film) {
-    let soldTickets = film.tickets_sold;
-    film.forEach(
-      buyTicket.addEventListener("click", () => {
-        soldTickets = soldTickets + 1;
-        remTickets.innerHTML = film.capacity - soldTickets;
-        if (remTickets.innerHTML < 0) {
-          setTimeout(() => alert("TICKETS SOLD OUT!!"), 100);
-          remTickets.innerHTML = 0;
-        }
-      })
-    );
-  }
-fetch("http://localhost:3000/films/1")
-  .then((response) => response.json())
-  .then(buyTicketHandler);
+function buyTicketHandler() {
+  buyTicket.addEventListener("click", () => {
+    let remTicketsNo = parseInt(remTickets.innerHTML);
+    if (remTicketsNo > 0) {
+      remTickets.innerHTML = remTickets.innerHTML - 1;
+    } else {
+      buyTicket.textContent = "Sold Out";
+
+      setTimeout(() => alert("TICKETS SOLD OUT!!"), 100);
+    }
+  });
+}
+buyTicketHandler();

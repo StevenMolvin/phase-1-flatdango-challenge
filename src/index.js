@@ -28,7 +28,7 @@ fetch("http://localhost:3000/films/1")
   .then((response) => response.json())
   .then(addFilm);
 
-//Add Movie titles
+//Add Movie details
 function movieTitles(films) {
   films.forEach((film) => {
     const title = document.createElement("li");

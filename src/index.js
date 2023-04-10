@@ -13,6 +13,8 @@ function addFilm(film) {
   poster.src = film.poster;
   poster.alt = film.title;
 
+  titles.innerHTML = film.title;
+
   movieTitle.innerHTML = film.title;
 
   descr.innerHTML = film.description;
